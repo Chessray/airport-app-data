@@ -3,17 +3,21 @@ package uk.co.kleindelao.demo.airportdisplay;
 import static java.time.DayOfWeek.TUESDAY;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
 
 public class DataReaderTest {
   private final DataReader underTest = new DataReader();
 
+  public DataReaderTest() throws IOException {
+  }
+
   @Test
   void shouldReturnNumberOfRecords() {
     final var numberOfEntries = underTest.getNumberOfEntries();
 
-    then(numberOfEntries).isEqualTo(28);
+    then(numberOfEntries).isEqualTo(27);
   }
 
   @Test

@@ -14,12 +14,12 @@ class CsvRecordToFlightConverterTest {
 
   @Test
   void shouldConvertInputRecord() {
-    final var inputRecord = mock(CSVRecord.class);
     final var departureHour = 9;
     final var departureMinute = 0;
     final var destination = "Antigua";
     final var destinationCode = "ANU";
     final var flightNumber = "VS033";
+    final var inputRecord = mock(CSVRecord.class);
     given(inputRecord.get("Departure Time")).willReturn(String.format("%02d:%02d", departureHour,
         departureMinute));
     given(inputRecord.get("Destination")).willReturn(destination);
@@ -40,5 +40,31 @@ class CsvRecordToFlightConverterTest {
     then(flight.destinationIataCode()).isEqualTo(destinationCode);
     then(flight.number()).isEqualTo(flightNumber);
     then(flight.days()).containsExactly(TUESDAY);
+  }
+
+  @Test
+  void shouldHandleAdditionalSpaceInTimeColumn() {
+    final var departureHour = 12;
+    final var departureMinute = 25;
+    final var destination = "Antigua";
+    final var destinationCode = "ANU";
+    final var flightNumber = "VS033";
+    final var inputRecord = mock(CSVRecord.class);
+    given(inputRecord.get("Departure Time")).willReturn(
+        String.format("%02d:%02d ", departureHour, departureMinute));
+    given(inputRecord.get("Destination")).willReturn(destination);
+    given(inputRecord.get("Destination Airport IATA")).willReturn(destinationCode);
+    given(inputRecord.get("Flight No")).willReturn(flightNumber);
+    given(inputRecord.get("Sunday")).willReturn("");
+    given(inputRecord.get("Monday")).willReturn("");
+    given(inputRecord.get("Tuesday")).willReturn("x");
+    given(inputRecord.get("Wednesday")).willReturn("");
+    given(inputRecord.get("Thursday")).willReturn("");
+    given(inputRecord.get("Friday")).willReturn("");
+    given(inputRecord.get("Saturday")).willReturn("");
+
+    final var flight = underTest.convert(inputRecord);
+
+    then(flight.departureTime()).isEqualTo(LocalTime.of(departureHour, departureMinute, 0));
   }
 }

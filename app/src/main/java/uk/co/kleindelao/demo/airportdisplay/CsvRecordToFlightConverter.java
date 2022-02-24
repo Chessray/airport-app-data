@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.apache.commons.lang3.StringUtils.trim;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -22,7 +23,7 @@ public class CsvRecordToFlightConverter {
                                                                    .toLowerCase()), identity()));
 
   public Flight convert(final CSVRecord record) {
-    final var departureTime = LocalTime.parse(record.get("Departure Time"), ISO_TIME);
+    final var departureTime = LocalTime.parse(trim(record.get("Departure Time")), ISO_TIME);
     final var destination = record.get("Destination");
     final var destinationCode = record.get("Destination Airport IATA");
     final var flightNumber = record.get("Flight No");
