@@ -6,4 +6,7 @@ import java.util.Set;
 
 public record Flight(LocalTime departureTime, String destination, String destinationIataCode,
                      String number, Set<DayOfWeek> days) {
+  public boolean fliesOnDayOfWeek(final DayOfWeek dayOfWeek) {
+    return days().contains(dayOfWeek);
+  }
 }
