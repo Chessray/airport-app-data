@@ -33,7 +33,7 @@ class ResponseTableRendererTest {
     final var responseLines = responseTable.lines()
                                            .toList();
     then(responseLines).hasSize(5);
-    then(responseLines.get(3)).isEqualTo("|           02:08 | " + destination + " |              " +
+    then(responseLines.get(3)).isEqualTo("|          02:08 | " + destination + " |              " +
         "     " + destinationCode + " |         " + flightNumber + " |");
   }
 }

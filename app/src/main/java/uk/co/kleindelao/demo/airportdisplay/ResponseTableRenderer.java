@@ -19,7 +19,7 @@ public class ResponseTableRenderer {
   }
 
   private static String render(final Flight flight) {
-    return String.format("|           %1$tH:%1$tM | %2$11s | %3$21s | %4$13s |\n",
+    return String.format("| %1$11tH:%1$tM | %2$11s | %3$21s | %4$13s |\n",
         flight.departureTime(), flight.destination(), flight.destinationIataCode(),
         flight.number());
   }
