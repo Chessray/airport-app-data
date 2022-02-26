@@ -11,10 +11,17 @@ public class CommandLineInterface {
   }
 
   public void getFlightsForDate() {
+    dataReader.getFlightsForDateSortedByTime(getFlightDate());
+  }
+
+  private LocalDate getFlightDate() {
     final var scanner = new Scanner(System.in);
+    System.out.println("Please enter year:");
     final var year = scanner.nextInt();
+    System.out.println("Please enter month:");
     final var month = scanner.nextInt();
+    System.out.println("Please enter date of month:");
     final var dateOfMonth = scanner.nextInt();
-    dataReader.getFlightsForDateSortedByTime(LocalDate.of(year, month, dateOfMonth));
+    return LocalDate.of(year, month, dateOfMonth);
   }
 }
